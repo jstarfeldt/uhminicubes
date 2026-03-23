@@ -220,7 +220,7 @@ if __name__ == '__main__':
     time_strs = g_times.datetime[start:start+num]
     full_file_list = [f'{file_prefix}/GOES_image_{time_str}.tif' for time_str in time_strs] 
     current_file_list = sorted(glob.glob(f'{file_prefix}/*'))
-    missing_indices = np.where([x not in current_file_list for x in full_file_list])[0]
+    missing_indices = np.where([x not in current_file_list for x in full_file_list])[0]+start
     print('Length of missing indices:', len(missing_indices))
 
     # Sets up inputs for multiprocessing pool

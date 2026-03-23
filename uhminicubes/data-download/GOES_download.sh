@@ -22,5 +22,6 @@ fi
 
 echo "First argument: $1"
 
-cd /home/jonstar/ML_UH_datasets/Jon_dataset_code
-/tmp/$USER/heat/bin/python GOES_download.py --city=$1 --n=105120 --startFile=0 --cpus=32
+cd /home/jonstar/ML_UH_datasets/uhminicubes/data-download
+#/tmp/$USER/heat/bin/python GOES_download.py --city=$1 --n=105120 --startFile=0 --cpus=32
+/tmp/$USER/heat/bin/python GOES_download.py --city=$1 --n=1 --startFile=3709 --cpus=32
