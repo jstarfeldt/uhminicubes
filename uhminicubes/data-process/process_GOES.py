@@ -129,7 +129,7 @@ city_ICAO_codes = {
     'Seattle': 'KSEA',
     'St_Louis': 'KSTL',
     'Tegucigalpa': 'MHTG',
-    ' Toronto': 'CYYZ',
+    'Toronto': 'CYYZ',
     'DMV': 'KBWI'
 }
 
@@ -390,11 +390,11 @@ if __name__ == '__main__':
 
     # GOES-West
     if city in ['Seattle', 'San_Francisco', 'Los_Angeles', 'San_Diego', 'Phoenix', 'Las_Vegas', 'Salt_Lake_City']:
-        g_times = pd.read_csv('/home/jonstar/urban_heat_dataset/GOES_West_times.csv').value
+        g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_West_times.csv').value
         indices = [25268, 50755, 76786, 103146]
     # GOES-East
     else:
-        g_times = pd.read_csv('/home/jonstar/urban_heat_dataset/GOES_East_times.csv').value
+        g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_East_times.csv').value
         indices = [25994, 52337, 78338, 104730]
 
 
@@ -416,8 +416,7 @@ if __name__ == '__main__':
         suffix = '2023_2'
         start = indices[2]
         end = indices[3]
-    processed_dir = f'/scratch/zt1/project/mjmolina-prj/user/jonstar/processed_GOES_{city}_{suffix}'
-    subprocess.call(['mkdir', '-p', processed_dir])
+    processed_dir = f'/scratch/zt1/project/mjmolina-prj/user/jonstar/uhminicubes/lresgrid'
 
 
     def sort_func_GOES(s):
@@ -455,7 +454,7 @@ if __name__ == '__main__':
         return utm_proj(pt[0], pt[1], inverse=True)
 
     latlon_pts_2km_1d = np.array(list(map(stacked_to_latlon, utm_coords)))
-    latlon_pts_2km = latlon_pts_2km_1d.reshape((45,45,2))
+    latlon_pts_2km = latlon_pts_2km_1d.reshape((45, 45, 2))
 
     # Close opened datasets
     dsG.close()
@@ -463,13 +462,17 @@ if __name__ == '__main__':
 
     # Finds indices of files that are not currently processed
     file_index = np.arange(start, end)
-    full_file_list = [f'{processed_dir}/lresgrid_{city_ICAO_codes[city]}_{GOES_tif_list[i].split('_')[-1].split('.')[0]}.nc' for i in file_index]
-    current_file_list = sorted(glob.glob(f'{processed_dir}/*'))
+    dt_strs = [GOES_tif_list[i].split('_')[-1].split('.')[0] for i in file_index]
+    full_file_list = [f'{processed_dir}/{dt_strs[i][:4]}/{dt_strs[i][4:6]}/{city_ICAO_codes[city]}/lresgrid_{city_ICAO_codes[city]}_{GOES_tif_list[i].split('_')[-1].split('.')[0]}.nc' for i in file_index]
+    current_file_list = []
+    for year_dir in sorted(glob.glob(f'{processed_dir}/lresgrid/2*')):
+        for month_dir in sorted(glob.glob(f'{year_dir}/*')):
+            current_file_list.extend(sorted(f'{month_dir}/{city_ICAO_codes[city]}/*'))
     missing_indices = np.where([x not in current_file_list for x in full_file_list])[0]
     print('Length of missing indices:', len(missing_indices))
 
     # Sets up inputs for the multiprocessing pool
-    inputs = [[GOES_tif_list[i], datetime.datetime.fromtimestamp(g_times[i]/1000, datetime.UTC).strftime('%Y-%m-%dT%H:%M:%SZ'), latlon_pts_2km, f'{processed_dir}/lresgrid_{city_ICAO_codes[city]}_{GOES_tif_list[i].split('_')[-1].split('.')[0]}.nc'] for i in file_index[missing_indices]]
+    inputs = [[GOES_tif_list[i], datetime.datetime.fromtimestamp(g_times[i]/1000, datetime.UTC).strftime('%Y-%m-%dT%H:%M:%SZ'), latlon_pts_2km, f'{processed_dir}/{dt_strs[i][:4]}/{dt_strs[i][4:6]}/{city_ICAO_codes[city]}/lresgrid_{city_ICAO_codes[city]}_{GOES_tif_list[i].split('_')[-1].split('.')[0]}.nc'] for i in file_index[missing_indices]]
 
     # Run multiprocessing pool
     #print('Starting multiprocessing')

@@ -211,10 +211,10 @@ if __name__ == '__main__':
 
     # GOES-West
     if city in ['Seattle', 'San_Francisco', 'Los_Angeles', 'San_Diego', 'Phoenix', 'Las_Vegas', 'Salt_Lake_City']:
-        g_times = pd.read_csv('/home/jonstar/urban_heat_dataset/GOES_West_times.csv')
+        g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_West_times.csv')
     # GOES-East
     else:
-        g_times = pd.read_csv('/home/jonstar/urban_heat_dataset/GOES_East_times.csv')
+        g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_East_times.csv')
 
     # Finds indices of files that are not currently created
     time_strs = g_times.datetime[start:start+num]

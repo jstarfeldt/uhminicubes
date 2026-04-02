@@ -4,6 +4,9 @@ channels:
   - defaults
 dependencies:
   - cartopy=0.25.0=py313h86c3e14_0
+  - h5netcdf=1.7.3=py313h06a4308_0
+  - h5py=3.15.1=py313hbc3df90_2
+  - hdf5=2.0.0=h044d841_1
   - ipykernel=7.2.0=py313h7040dfc_0
   - ipython=9.10.0=py313h06a4308_0
   - jupyter=1.1.1=py313h06a4308_0
@@ -16,6 +19,7 @@ dependencies:
   - pyproj=3.7.2=py313h563eff2_0
   - python=3.13.12=hc97d973_100_cp313
   - rasterio=1.5.0=py313h2005660_0
+  - scipy=1.17.1=py313h804029f_0
   - svgutils=0.3.4=pyhd8ed1ab_0
   - xarray=2025.10.1=py313h06a4308_0
   - yaml=0.2.5=h7b6447c_0

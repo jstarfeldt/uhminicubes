@@ -23,5 +23,5 @@ fi
 echo "First argument: $1"
 echo "Second argument: $2"
 
-cd /home/jonstar/ML_UH_datasets/uhminicubes/data-process
+cd /home/jonstar/uhminicubes/uhminicubes/data-process
 /tmp/$USER/heat/bin/python process_GOES.py --city=$1 --cpus=32 --section=$2
