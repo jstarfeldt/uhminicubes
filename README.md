@@ -24,4 +24,4 @@ Urban Heat MiniCubes is comprised of remotely sensed data from a number of satel
 
 (b) Each filename follows a general structure. The structure of city data filenames is provided in blue, and the structure of latitude and longitude coordinate filenames is provided in green.
 
-<img width="1270" height="756" alt="directory_tree_figure" src="https://github.com/user-attachments/assets/fac4673b-daa1-4af5-b96b-4af4d35a5f67" />
+<img width="1024" height="610" alt="directory_tree_figure" src="https://github.com/user-attachments/assets/de6c22a1-46f1-49e3-94da-12e053f9f4bd" />
