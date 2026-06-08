@@ -20,8 +20,8 @@ Urban Heat MiniCubes is comprised of remotely sensed data from a number of satel
 * Microwave land surface temperature temporal interpolation: The microwave land surface temperature product is natively provided every 15 minutes in local solar time. These data are interpolated to the 10-minute temporal resolution of the GOES-R data by converting local solar time to UTC time as $\text{UTC time} = \text{Local Solar Time} - \left(\frac{\text{Longitude}}{360}\right) \times 24$.
 
 ## How are files stored in the dataset?
-(a) Files are stratified by modality, year, month, and city in blue-colored directories. Additionally, the corresponding latitude and longitude coordinates of the export grid are provided for each city, for each modality in green-colored directories titled "latlon."
+(a) Files are stratified by modality and sub-stratified by data files versus coordinate files. Data files contain physical variables. Coordinate files provide the corresponding latitude and longitude coordinates for the UTM grid in each city.
 
-(b) Each filename follows a general structure. The structure of city data filenames is provided in blue, and the structure of latitude and longitude coordinate filenames is provided in green.
+(b) Each filename follows a general structure. The structures of city data filenames are provided in blue and green, and the structure of latitude and longitude coordinate filenames is provided in orange.
 
-<img width="1024" height="610" alt="directory_tree_figure" src="https://github.com/user-attachments/assets/de6c22a1-46f1-49e3-94da-12e053f9f4bd" />
+<img width="1300" height="747" alt="directory_tree_presentation_MJM" src="https://github.com/user-attachments/assets/98d81c35-67d2-49ee-8c4a-b5754734fade" />
