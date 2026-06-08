@@ -8,6 +8,9 @@ Urban heat is amplified by impermeable surfaces and heterogeneous built environm
 * Code to reproduce figures found in the preprint
 * Yaml files to create the necessary conda environments
 
+## Data Access
+The dataset can be accessed at doi.org/10.5065/GNGZ-2510
+
 ## Data sources and processing
 Urban Heat MiniCubes is comprised of remotely sensed data from a number of satellites, including Landsat 8/9, Sentinel-1, and GOES-16/17/18. The code in this repository shows how to download data from these satellites from Google Earth Engine. These data are also publicly available online. Each file in the dataset is regridded to a $90\times90$ km grid in Universal Transverse Mercator (UTM) coordinates, named the "export grid", using nearest neighbor resampling. Processing for individual file modalities is listed below.
 
