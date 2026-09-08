@@ -19,54 +19,54 @@ Export coordinates for each urban area
 KEY: [utm zone, boolean T/F for northern/southern hemisphere, utm x, utm y]
 """
 export_coords = {
-    'DMV':[18, True, 292000, 4372200],
-    'NYC':[18, True, 561166, 4546228],
-    'Phoenix':[12, True, 356592, 3758141],
-    'Miami':[17, True, 503991, 2915332],
-    'Chicago':[16, True, 386195, 4680677],
-    'Denver':[13, True, 466349, 4442816],
-    'Seattle':[10, True, 518589, 5311884],
-    'San_Francisco':[10, True, 541523, 4206919],
-    'Los_Angeles':[11, True, 346524, 3803779],
-    'Atlanta':[16, True, 703143, 3787639],
-    'Toronto':[17, True, 566749, 4867878],
-    'Mexico_City':[14, True, 426632, 2177328],
-    'Las_Vegas':[11, True, 618776, 4038562],
-    'Salt_Lake_City':[12, True, 371135, 4538777],
-    'Dallas':[14, True, 639754, 3678675],
-    'Houston':[15, True, 232521, 3334892],
-    'New_Orleans':[15, True, 723933, 3361201],
-    'St_Louis':[15, True, 672050, 4323318],
-    'Minneapolis':[15, True, 433510, 5031071],
-    'Jacksonville':[17, True, 401561, 3376745],
-    'Charlotte':[17, True, 472912, 3938294],
-    'Philadelphia':[18, True, 445926, 4469797],
-    'San_Diego':[11, True, 468102, 3666860],
-    'San_Juan':[19, True, 732184, 2071833],
-    'Montreal':[18, True, 564088, 5089380],
-    'Guadalajara':[13, True, 621576, 2326245],
-    'Monterrey':[14, True, 318956, 2885247],
-    'Cancun':[16, True, 470776, 2369100],
-    'Billings':[12, True, 655301, 5109344],
-    'Guatemala_City':[15, True, 711929, 1659823],
-    'San_Jose':[16, True, 772982, 1148166],
-    'Havana':[17, True, 310663, 2566532],
-    'Santo_Domingo':[19, True, 354586, 2108039],
-    'Tegucigalpa':[16, True, 405549, 1616590],
-    'Managua':[16, True, 524984, 1388932],
-    'Panama_City':[17, True, 610881, 1043658],
-    'Bogota':[18, True, 546442, 561743],
-    'Lima':[18, False, 262348, 8709133],
-    'Quito':[17, True, 733395, 16923],
-    'Santiago':[19, False, 298834, 6329569],
-    'Buenos_Aires':[21, False, 326030, 6204959],
-    'Sao_Paulo':[23, False, 294104, 7446208],
-    'Manaus':[20, False, 762422, 9716468],
-    'Punta_Arenas':[19, False, 319805, 4162998],
-    'La_Paz':[19, False, 548109, 8213756],
-    'Montevideo':[21, False, 545458, 6223320],
-    'Brasilia':[22, False, 783269, 8287283],
-    'Caracas':[19, True, 687497, 1176029]
+    'KBWI':[18, True, 292000, 4372200],
+    'KJFK':[18, True, 561166, 4546228],
+    'KPHX':[12, True, 356592, 3758141],
+    'KMIA':[17, True, 503991, 2915332],
+    'KORD':[16, True, 386195, 4680677],
+    'KDEN':[13, True, 466349, 4442816],
+    'KSEA':[10, True, 518589, 5311884],
+    'KSFO':[10, True, 541523, 4206919],
+    'KLAX':[11, True, 346524, 3803779],
+    'KATL':[16, True, 703143, 3787639],
+    'CYYZ':[17, True, 566749, 4867878],
+    'MMMX':[14, True, 426632, 2177328],
+    'KLAS':[11, True, 618776, 4038562],
+    'KSLC':[12, True, 371135, 4538777],
+    'KDFW':[14, True, 639754, 3678675],
+    'KIAH':[15, True, 232521, 3334892],
+    'KMSY':[15, True, 723933, 3361201],
+    'KSTL':[15, True, 672050, 4323318],
+    'KMSP':[15, True, 433510, 5031071],
+    'KJAX':[17, True, 401561, 3376745],
+    'KCLT':[17, True, 472912, 3938294],
+    'KPHL':[18, True, 445926, 4469797],
+    'KSAN':[11, True, 468102, 3666860],
+    'TJSJ':[19, True, 732184, 2071833],
+    'CYUL':[18, True, 564088, 5089380],
+    'MMGT':[13, True, 621576, 2326245],
+    'MMMY':[14, True, 318956, 2885247],
+    'MMUN':[16, True, 470776, 2369100],
+    'KBIL':[12, True, 655301, 5109344],
+    'MGGT':[15, True, 711929, 1659823],
+    'MROC':[16, True, 772982, 1148166],
+    'MUHA':[17, True, 310663, 2566532],
+    'MDSD':[19, True, 354586, 2108039],
+    'MHTG':[16, True, 405549, 1616590],
+    'MNMG':[16, True, 524984, 1388932],
+    'MPTO':[17, True, 610881, 1043658],
+    'SKBO':[18, True, 546442, 561743],
+    'SPJC':[18, False, 262348, 8709133],
+    'SEQM':[17, True, 733395, 16923],
+    'SCEL':[19, False, 298834, 6329569],
+    'SAEZ':[21, False, 326030, 6204959],
+    'SBGR':[23, False, 294104, 7446208],
+    'SBEG':[20, False, 762422, 9716468],
+    'SCCI':[19, False, 319805, 4162998],
+    'SLLP':[19, False, 548109, 8213756],
+    'SUMU':[21, False, 545458, 6223320],
+    'SBBR':[22, False, 783269, 8287283],
+    'SVMI':[19, True, 687497, 1176029]
 }
 
 
@@ -146,7 +146,10 @@ def getResultGOES_new(city, city_export, dt, filename, verbose=False):
             GOES = ee.ImageCollection("NOAA/GOES/18/MCMIPF").filterDate(date1, date2)
     # GOES-East
     else:
-        GOES = ee.ImageCollection("NOAA/GOES/16/MCMIPF").filterDate(date1, date2)
+        if int(dt) < 202504070000:
+            GOES = ee.ImageCollection("NOAA/GOES/16/MCMIPF").filterDate(date1, date2)
+        else:
+            GOES = ee.ImageCollection("NOAA/GOES/19/MCMIPF").filterDate(date1, date2)
     processed = GOES.map(process_GOES)
 
     # Get the image from the filtered result
@@ -193,6 +196,7 @@ if __name__ == '__main__':
     parser.add_argument('--city', help='String of city from list of valid cities to make data for')
     parser.add_argument('--n', nargs='?', const=105120, help='Number of files to create')
     parser.add_argument('--startFile', nargs='?', const=0, help='File index to start from')
+    parser.add_argument('--startYear', nargs='?', const=2022, help='Start year of data production. Either 2022 or 2024')
     parser.add_argument('--cpus', nargs='?', const=100, help='Number of CPU cores to run in parallel')
     args = parser.parse_args()
 
@@ -202,6 +206,7 @@ if __name__ == '__main__':
 
     num = int(args.n)
     start = int(args.startFile)
+    start_year = int(args.startYear)
     if num > 105120: # Largest number of files possible
         num = processed.size().getInfo()
 
@@ -214,7 +219,10 @@ if __name__ == '__main__':
         g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_West_times.csv')
     # GOES-East
     else:
-        g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_East_times.csv')
+        if start_year == 2024:
+            g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_East_times_24_25.csv')
+        else:
+            g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_East_times.csv')
 
     # Finds indices of files that are not currently created
     time_strs = g_times.datetime[start:start+num]

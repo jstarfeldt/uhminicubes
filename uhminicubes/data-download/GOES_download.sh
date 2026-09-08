@@ -7,7 +7,7 @@
 #SBATCH -n 1
 
 # Number of CPU cores
-#SBATCH -c 30
+#SBATCH -c 32
 
 # Memory per CPU core
 #SBATCH --mem-per-cpu=512
@@ -21,6 +21,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "First argument: $1"
+echo "Second argument: $2"
 
 cd /home/jonstar/uhminicubes/uhminicubes/data-download
-/tmp/$USER/heat/bin/python GOES_download.py --city=$1 --n=105120 --startFile=0 --cpus=32
+/tmp/$USER/heat/bin/python GOES_download.py --city=$1 --n=105120 --startFile=0 --cpus=32 --startYear=$2
