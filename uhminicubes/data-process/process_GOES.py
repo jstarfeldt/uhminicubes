@@ -242,6 +242,7 @@ def process_GOES_tif(tif, time, latlon_pts, fname, coord_bounds=None):
 
             # Index the first dimension of the value array
             mw_interpolated = interpolated_array[interpolated_indices, np.arange(45)[:, None], np.arange(45)]
+            mw_interpolated = np.where(mw_interpolated == 0, np.nan, mw_interpolated)
 
         # Set a new variable for the interpolated MW LST
         geotiff_ds['microwave_LST'] = (('y','x'), mw_interpolated)
@@ -353,7 +354,7 @@ if __name__ == '__main__':
     utm_proj = Proj(projparams=proj_code)
 
     # GOES-West
-    if city in ['Seattle', 'San_Francisco', 'Los_Angeles', 'San_Diego', 'Phoenix', 'Las_Vegas', 'Salt_Lake_City']:
+    if city in ['KSEA', 'KSFO', 'KLAX', 'KSAN', 'KPHX', 'KLAS', 'KSLC']:
         g_times = pd.read_csv('/home/jonstar/uhminicubes_tmp/GOES_West_times.csv').value
         indices = [25268, 50755, 76786, 103146]
     # GOES-East

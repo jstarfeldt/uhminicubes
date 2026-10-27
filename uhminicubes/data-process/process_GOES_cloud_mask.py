@@ -7,12 +7,23 @@ import numpy as np
 from scipy import interpolate
 import argparse
 import subprocess
-from datetime import datetime
+from datetime import datetime, timedelta
+import os
 import multiprocessing
 
 
 
 def stringify_day(num):
+    """
+    Turns a day-of-year integer (1-365) into
+    its three-digit form.
+
+    Args:
+    num (int): Day-of-year integer to convert
+
+    Returns:
+    (str): Three-digit day-of-year as a string
+    """
     if len(str(num)) == 1:
         return f'00{num}'
     elif len(str(num)) == 2:
@@ -22,6 +33,18 @@ def stringify_day(num):
 
 
 def prefixify(num, year=2022):
+    """
+    Creates a string with the AWS directory to grab
+    GOES ACM files from. The directories are separated
+    by the day of the year.
+
+    Args:
+    num (int): Day-of-year integer to grab data from
+    year (int): Year to grab data from
+
+    Returns:
+    (str): Directory path to grab GOES ACM data from
+    """
     return f'ABI-L2-ACMF/{year}/{stringify_day(num)}' # Example prefix for Full Disk imagery
 
 
@@ -47,16 +70,22 @@ def init_worker():
     s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
 
 
-def process_GOES_file(file_key, city):
+def process_GOES_file(file_key, bucket_name, city):
     """
     Downloads a GOES cloud mask file from AWS, interpolates it to a given city's lresgrid,
     and saves the data as a netCDF file.
 
     Args:
-    prefix (str): Directory path of the AWS bucket to download data from
+    file_key (str): Path of the file to download
+    bucket_name (str): The AWS bucket to download data from
     city (str): City str of the city to download data from
     """
-    bucket_name = 'noaa-goes16'
+    # Test if file has already been created
+    date = file_key.split('_s')[-1][:11]
+    date_obj = datetime.strptime(date[:7], "%Y%j")
+    fname = f'lresgrid_{city}_{date[:4]}{stringify_date(date_obj.month)}{stringify_date(date_obj.day)}{date[7:]}_mask.nc'
+    if fname in existing_file_list:
+        return
 
     # Download the file content into an in-memory byte buffer
     response = s3.get_object(Bucket=bucket_name, Key=file_key)
@@ -113,10 +142,6 @@ def process_GOES_file(file_key, city):
 
     GOES_cloud_mask = interpolate.griddata(latlon_pts_GOES, values_cropped, latlon_pts_lresgrid, method='nearest')
 
-    date = file_key.split('_s')[-1][:11]
-    date_obj = datetime.strptime(date[:7], "%Y%j")
-    fname = f'lresgrid_{city}_{date[:4]}{stringify_date(date_obj.month)}{stringify_date(date_obj.day)}{date[7:]}_mask.nc'
-
     ds_cloud = dsG.copy()
     ds_cloud['GOES_cloud_mask'] = (('y', 'x'), GOES_cloud_mask)
     del ds_cloud['latitude']
@@ -140,16 +165,23 @@ def process_GOES_cloud_mask(prefix, city):
     prefix (str): Directory path of the AWS bucket to download data from
     city (str): City str of the city to download data from
     """
+    if city in ['KSEA', 'KSFO', 'KLAX', 'KSAN', 'KPHX', 'KLAS', 'KSLC']:
+        if prefix.split('/')[1] == '2023' and int(prefix.split('/')[-1]) >= 4:
+            bucket_name = 'noaa-goes18'
+        else:
+            bucket_name = 'noaa-goes17'
+    else:
+        bucket_name = 'noaa-goes16'
+
     response = s3.list_objects_v2(
         Bucket=bucket_name,
         Prefix=prefix,
-        #MaxKeys=10
     )
     # Print the found object keys
     for obj in response.get('Contents', []):
         #print(obj['Key'])# Example of a specific netCDF file key from the bucket
         file_key = obj['Key']
-        process_GOES_file(file_key, city)
+        process_GOES_file(file_key, bucket_name, city)
 
 
 
@@ -172,13 +204,32 @@ if __name__ == '__main__':
 
     # Create an S3 client with anonymous/unsigned configuration
     s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
-    bucket_name = 'noaa-goes16'
-    region = 'us-east-1' # The bucket is in us-east-1
 
-    dates = list(map(lambda x: prefixify(x, year), range(1, 366)))
+    # Create datetimes for full file list
+    start_date = datetime(year, 1, 1, 0, 0)
+    end_date = datetime(year+1, 1, 1, 0, 0)  # Excludes the next year's start
+    datetimes = []
+    current = start_date
+    # Loop and increment by 10 minutes
+    while current < end_date:
+        datetimes.append(current)
+        current += timedelta(minutes=10)
 
-    # Sets up inputs for the multiprocessing pool
-    inputs = [[date, city] for date in dates]
+    # Finds files that have not yet been created
+    full_file_list = [f'lresgrid_{city}_{year}{stringify_date(dt.month)}{stringify_date(dt.day)}{stringify_date(dt.hour)}{stringify_date(dt.minute)}_mask.nc' for dt in datetimes]
+    existing_file_list = os.listdir(f'{processed_dir}/{city}')
+    files_to_make = list(set(full_file_list) - set(existing_file_list))
+    print('Files left to make:', len(files_to_make))
+
+    # Find the Julian Day of each file that has not yet been created,
+    # which is the input to the processing function because AWS groups
+    # data by Julian Day
+    days = [datetime.strptime(file.split('_')[2], '%Y%m%d%H%M').strftime('%j') for file in files_to_make]
+    days_to_make = list(set(days))
+   
+    # Set up inputs for the multiprocessing pool
+    date_roots = [prefixify(day, year) for day in days_to_make]
+    inputs = [[date_root, city] for date_root in date_roots]
 
     # Run multiprocessing pool
     print('Starting multiprocessing')
